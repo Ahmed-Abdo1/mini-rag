@@ -8,12 +8,14 @@ base_router = APIRouter(
 )
 
 @base_router.get("/")
-async def welcome():
-    app =get_settings()
-    app_name = app.APP_Name
-    app_version = app.App_version
+async def welcome(app_Sett:Setting =Depends(get_settings)):
+    # app =get_settings()
+    app_name = app_Sett.APP_Name
+    app_version = app_Sett.App_version
+    app_OPENAI_API = app_Sett.OPENAI_API_KEY
 
     return {
         "app_name": app_name,
         "app_version": app_version,
+        "app_OPEN":app_OPENAI_API
     }
