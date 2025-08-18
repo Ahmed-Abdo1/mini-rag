@@ -6,7 +6,7 @@ class Setting(BaseSettings):
     OPENAI_API_KEY: str
 
     class congfig:
-        env_file='.env'
+        env_file=".env"
 
 def get_settings():
     return Setting()

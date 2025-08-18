@@ -9,9 +9,9 @@ base_router = APIRouter(
 
 @base_router.get("/")
 async def welcome():
-    app_settings =get_settings()
-    app_name = app_settings.APP_Name
-    app_version = app_settings.App_version
+    app =get_settings()
+    app_name = app.APP_Name
+    app_version = app.App_version
 
     return {
         "app_name": app_name,
