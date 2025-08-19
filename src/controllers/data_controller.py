@@ -7,9 +7,8 @@ class Data_Controller(BaseController):
         self.Max_Scale=1048576
         super().__init__()
     def Validate_File(self,file:UploadFile):
-        if file is not self.app_settings.File_Allowed_TYPES:
+        if file.content_type not in  self.app_settings.File_Allowed_TYPES:
             return False
         if file.size > self.app_settings.File_MAX_SIZE*self.Max_Scale:
             return False
-        return True
-        
+        return True 

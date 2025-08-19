@@ -4,7 +4,7 @@ class Setting(BaseSettings):
     APP_Name : str
     App_version: str
     OPENAI_API_KEY : str
-    File_Allowed_TYPES : list[str]
+    File_Allowed_TYPES : list
     File_MAX_SIZE :int
 
     class Config:

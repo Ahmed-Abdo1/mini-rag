@@ -7,11 +7,11 @@ data_router = APIRouter(
     tags=["api_v1"],
 )
 
-@data_router.post("/upload {project_id}")
-
+@data_router.post("/upload/{project_id}")
 
 async def upload_data( project_id:str,
                       file: UploadFile):
     
     is_valid=Data_Controller().Validate_File(file=file)
+
     return is_valid
