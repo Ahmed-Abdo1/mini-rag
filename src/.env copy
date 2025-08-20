@@ -1,5 +1,5 @@
 APP_Name="mini-rag"
 App_version="0.1"
 OPENAI_API_KEY=""
-
+File_MAX_SIZE-Chunks=512000
 

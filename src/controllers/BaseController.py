@@ -1,5 +1,13 @@
-from Helper.config import get_settings , Setting
-
+import os
+from Helper.config import get_settings
+import string 
+import random
 class BaseController:
     def __init__(self):
-        self.app_settings=get_settings()
+        self.app_settings = get_settings()
+        self.base_dir = os.path.dirname(os.path.dirname(__file__))
+        self.files_dir = os.path.join(
+            self.base_dir,
+            "assets/files"
+        )
+ 
