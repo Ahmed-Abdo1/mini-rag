@@ -7,6 +7,7 @@ import aiofiles
 import os
 from Models import EnmsConstence
 import logging
+import uuid
 # from controllers.BaseController import project_controller
 logger=logging.getLogger('uvicorn.error')
 data_router = APIRouter(
@@ -14,13 +15,15 @@ data_router = APIRouter(
     tags=["api_v1"]
 ) 
 
+
 @data_router.post("/upload/{project_id}")
 async def upload_data(
     project_id: str,
     file: UploadFile,
-    app_Sett: Setting= Depends(get_settings)
-):
+    app_Sett: Setting= Depends(get_settings)):
     from controllers.Project_Controller import project_controller
+    pc = project_controller()
+    dc_data = Data_Controller()
     is_valid, result_signal = Data_Controller().Validate_File(file=file)
 
     if not is_valid:
@@ -29,12 +32,16 @@ async def upload_data(
             content=
             {"signal": result_signal}
         )
+    project_dir_path = pc.get_project_path(project_id=project_id)
+    file_path, file_id = dc_data.generate_unique_filepath(
+    orig_file_name=file.filename,
+    project_id=project_id
+        )
+    # file_path=os.path.join(
+    #     project_dir_path,
+    #     file.filename,
 
-    project_dir_path = project_controller().get_project_path(project_id=project_id)
-    file_path=os.path.join(
-        project_dir_path,
-        file.filename
-    )
+    # ) 
     try:
         async with aiofiles.open(file_path,'wb') as f :
             while chunk := await file.read(app_Sett.File_MAX_SIZE):
@@ -47,10 +54,9 @@ async def upload_data(
             {"signal": EnmsConstence.File_Uploaded_Failed.value}
         )
     return (
-        { 'content':EnmsConstence.File_Uploaded_Sucess }
+        { 'content':EnmsConstence.File_Uploaded_Sucess ,
+         'file_id':file_id
+         }
     )
 
-        
-  
-    
-
+   
